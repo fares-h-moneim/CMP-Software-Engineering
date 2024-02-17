@@ -21,7 +21,8 @@ function fetchEmployees() {
         deleteButton.classList.add('btn', 'btn-danger', 'btn-sm');
         
         // Add event listener to the delete button
-        deleteButton.addEventListener('click', () => deleteEmployee(item.id));
+        deleteButton.addEventListener('click', () => deleteEmployee(item.id, deleteButton));
+        
         deleteCell.appendChild(deleteButton);
 
         row.appendChild(deleteCell)
@@ -32,14 +33,14 @@ function fetchEmployees() {
     .catch(error => console.error(error))
 }
 
-// TODO
+// DONE
 // 1. Add event listener to the submit button
 document.querySelector('button[type = "submit"]').addEventListener('click', createEmployee);
 
-// TODO
-// 2. Add event listener to the delete button
+// DONE
+// Check line 24
 
-// TODO
+// DONE
 function createEmployee (){
   const name = document.getElementById('name').value;
   const id = document.getElementById('id').value;
@@ -60,11 +61,15 @@ function createEmployee (){
 }
 
 // TODO
-function deleteEmployee (id){
+function deleteEmployee (id, button){
   const response = fetch(`http://localhost:3000/api/v1/employee/${id}`, {
     method: 'DELETE',
   });
   console.log(response);
+
+  // Remove the row from the table
+  const row = button.parentElement.parentElement;
+  row.remove();
 }
 
 fetchEmployees()
